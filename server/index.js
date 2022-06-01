@@ -7,17 +7,20 @@ const app = express();
 require("dotenv").config();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ extends: true }));
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("DB STARTED");
-  })
-  .catch((err) => {
+app.use("/api", require("./routes/userRoutes"));
+
+async function start() {
+  try {
+    mongoose.connect(process.env.MONGO_URL).then(() => {
+      console.log("DB STARTED");
+    });
+    app.listen(process.env.PORT || port, () =>
+      console.log(`SERVER STARTED ${process.env.PORT}`)
+    );
+  } catch (error) {
     console.log(err.message);
-  });
-
-const server = app.listen(process.env.PORT || port, () =>
-  console.log(`SERVER STARTED ${process.env.PORT}`)
-);
+  }
+}
+start();
