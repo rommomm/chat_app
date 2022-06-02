@@ -1,13 +1,20 @@
-import React from "react";
-import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useFormik, useFormikContext } from "formik";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { errorStyle, successStyle } from "./toastStyled";
+import botImg from "../assets/botAvatar.png";
+import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./SignForm.scss";
 
 function SignUpForm({ handleSignUpForm }) {
+  const [image, setImage] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  console.log("image", image);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -15,19 +22,80 @@ function SignUpForm({ handleSignUpForm }) {
       password: "",
     },
     onSubmit: (values) => {
+      values.avatar = imageUrl;
+      console.log("values", values);
       if (!values.email) {
         return toast.error("Enter your email", errorStyle);
       } else if (values.username.length < 3) {
         return toast.error("Short username", errorStyle);
       } else if (values.password.length < 6) {
         return toast.error("Short password", errorStyle);
+      } else if (!values.avatar) {
+        return toast.error("Please upload your profile avatar", errorStyle);
       }
+      console.log("values", values);
       handleSignUpForm(values);
     },
   });
 
+  const validateImg = (e) => {
+    const file = e.target.files[0];
+    if (file.size >= 1048576) {
+      return toast.error("Max file size is 1mb", errorStyle);
+    } else {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const uploadImage = async () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "bxq8xfwl");
+    try {
+      setUploadingImage(true);
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/rezet/image/upload",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setUploadingImage(false);
+      return res.data.url;
+    } catch (error) {
+      setUploadingImage(false);
+      console.log("error", error);
+    }
+  };
+
+  async function handleUploadAvatar(e) {
+    e.preventDefault(e);
+    if (!image) {
+      return toast.error("Please upload your profile avatar", errorStyle);
+    }
+    const url = await uploadImage();
+    console.log("url", url);
+    setImageUrl(url);
+  }
+
   return (
     <form onSubmit={formik.handleSubmit}>
+      <div className="sign-up-avatar-container">
+        <img src={imagePreview || botImg} className="profile-avatar" />
+        <label htmlFor="image-upload" className="image-upload">
+          <i className="material-icons  add-picture-icon">add</i>
+        </label>
+        <input
+          type="file"
+          id="image-upload"
+          hidden
+          accept="image/png, image/jpeg"
+          onChange={validateImg}
+        />
+      </div>
       <input
         id="username"
         name="username"
@@ -52,7 +120,13 @@ function SignUpForm({ handleSignUpForm }) {
         onChange={formik.handleChange}
         value={formik.values.password}
       />
-      <button type="submit">Sign Up</button>
+      {imageUrl ? (
+        <button type="submit">Sign up</button>
+      ) : (
+        <button onClick={(e) => handleUploadAvatar(e)}>
+          {uploadingImage ? "Uploading..." : "Upload avatar"}
+        </button>
+      )}
       <span>
         <div>Alredy have an account ?</div>
         <div>

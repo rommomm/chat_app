@@ -50,4 +50,33 @@ form {
       }
     }
   }
+  .sign-up-avatar-container {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .profile-avatar {
+    width: 100px;
+    border-radius: 50%;
+    border: 1px solid black;
+    object-fit: cover;
+    height: 100px;
+  }
+  .add-picture-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    border-radius: 50%;
+    color: black;
+    background: whitesmoke;
+    border: 1px solid black;
+    cursor: pointer;
+    z-index: 99;
+    transition: 0.5s ease-in-out;
+    &:hover {
+      background-color: #997af0;
+    }
+  }
 }
+
