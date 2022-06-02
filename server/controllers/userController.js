@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 module.exports.signup = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, avatar } = req.body;
     const usernameCheck = await User.findOne({ username });
     if (usernameCheck)
       return res
@@ -20,6 +20,7 @@ module.exports.signup = async (req, res, next) => {
       email,
       username,
       password: hashedPassword,
+      avatar,
     });
     delete user.password;
     return res.json({ status: true, user });
