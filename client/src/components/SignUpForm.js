@@ -3,7 +3,6 @@ import { useFormik, useFormikContext } from "formik";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { errorStyle, successStyle } from "./toastStyled";
-import botImg from "../assets/botAvatar.png";
 import axios from "axios";
 import randomImage from "../libs/botAvatarRandom";
 import "react-toastify/dist/ReactToastify.css";
