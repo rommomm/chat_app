@@ -5,10 +5,10 @@ import { toast } from "react-toastify";
 import { errorStyle, successStyle } from "./toastStyled";
 import botImg from "../assets/botAvatar.png";
 import axios from "axios";
-
+import randomImage from "../libs/botAvatarRandom";
 import "react-toastify/dist/ReactToastify.css";
 import "./SignForm.scss";
-
+console.log("randomImage", randomImage);
 function SignUpForm({ handleSignUpForm }) {
   const [image, setImage] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -84,7 +84,7 @@ function SignUpForm({ handleSignUpForm }) {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="sign-up-avatar-container">
-        <img src={imagePreview || botImg} className="profile-avatar" />
+        <img src={imagePreview || randomImage} className="profile-avatar" />
         <label htmlFor="image-upload" className="image-upload">
           <i className="material-icons  add-picture-icon">add</i>
         </label>
