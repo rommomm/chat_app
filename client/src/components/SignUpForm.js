@@ -7,13 +7,13 @@ import axios from "axios";
 import randomImage from "../libs/botAvatarRandom";
 import "react-toastify/dist/ReactToastify.css";
 import "./SignForm.scss";
-console.log("randomImage", randomImage);
 function SignUpForm({ handleSignUpForm }) {
   const [image, setImage] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  console.log("image", image);
+  console.log("image", imageUrl);
+  console.log("randomImage", randomImage);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -22,7 +22,6 @@ function SignUpForm({ handleSignUpForm }) {
     },
     onSubmit: (values) => {
       values.avatar = imageUrl;
-      console.log("values", values);
       if (!values.email) {
         return toast.error("Enter your email", errorStyle);
       } else if (values.username.length < 3) {

@@ -1,0 +1,98 @@
+.chat-input-container {
+  display: grid;
+  grid-template-columns: 5% 95%;
+  height: 6%;
+  align-items: center;
+  background-color: #00000080;
+  border-radius: 0 0 25px 0;
+  padding: 0px 25px;
+  @media screen and (max-width: 720px) {
+    padding: 0 15px;
+    gap: 10px;
+  }
+  .button-container {
+    display: flex;
+    align-items: center;
+    color: white;
+    gap: 10px;
+    .emoji {
+      position: relative;
+      svg {
+        font-size: 20px;
+        color: #ffff00c8;
+        cursor: pointer;
+      }
+      .emoji-picker-react {
+        position: absolute;
+        top: -350px;
+        background-color: #080420;
+        box-shadow: 0 5px 10px #9a86f3;
+        border-color: #9a86f3;
+        .emoji-scroll-wrapper::-webkit-scrollbar {
+          background-color: #080420;
+          width: 5px;
+          &-thumb {
+            background-color: #9a86f3;
+          }
+        }
+        .emoji-categories {
+          button {
+            filter: contrast(0);
+          }
+        }
+        .emoji-search {
+          background-color: transparent;
+          border-color: #9a86f3;
+        }
+        .emoji-group:before {
+          background-color: #080420;
+        }
+      }
+    }
+  }
+  .input-container {
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    input {
+      width: 100%;
+      background-color: transparent;
+      color: white;
+      border: none;
+      padding-left: 5px;
+      font-size: 1.2rem;
+      &::selection {
+        background-color: #9a86f3;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #9a86f3;
+      border: none;
+      transition: 0.5s ease-in-out;
+      &:hover {
+      background-color: #4e0eff;
+      cursor: pointer;
+    }
+      svg {
+        font-size: 15px;
+        color: white;
+      }
+      @media screen and (max-width: 720px) {
+        padding: 10px 15px;
+        svg {
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}

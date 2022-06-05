@@ -1,0 +1,20 @@
+.sign-out {
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #997af0;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 0px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    text-transform: uppercase;
+    transition: 0.5s ease-in-out;
+    &:hover {
+      background-color: #4e0eff;
+    }
+  }
+}

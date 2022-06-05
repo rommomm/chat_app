@@ -1,0 +1,137 @@
+.contacts-container {
+  display: grid;
+  grid-template-rows: 10% 75% 15%;
+  overflow: hidden;
+  background-color: #00000015;
+  border-right: 1px solid #00000030;
+  border-radius: 25px 0 0;
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    border-bottom: 1px solid  #00000020;
+    img {
+      height: 50px;
+    }
+    h3 {
+      color: white;
+      text-transform: uppercase;
+    }
+  }
+  .contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    gap: 5px;
+    border-bottom: 1px solid #00000020;
+    &::-webkit-scrollbar {
+      width: 0.2rem;
+      &-thumb {
+        background-color: #ffffff39;
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+    }
+  }
+  .contact {
+    background-color: #00000015;;
+    min-height: 5rem;
+    cursor: pointer;
+    width: 95%;
+    border-radius: 0.2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    transition: 0.5s ease-in-out;
+    padding: 5px;
+    .avatar {
+      img {
+        width: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        height: 60px;
+      }
+    }
+    .username {
+      h3 {
+        color: white;
+      }
+    }
+  }
+  .selected {
+    background-color: #9a86f3;
+  }
+  .current-user {
+    background-color: #00000030;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    .avatar {
+      img {
+        width: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        height: 100px;
+      }
+    }
+    .username {
+      h2 {
+        color: white;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 720px) {
+  .contacts-container {
+    grid-template-rows: 0% 100% ;
+    .brand {
+      img {
+        display: none;
+      }
+      h3 {
+        display: none;
+      }
+    }
+    .contacts {
+      gap: 0px;
+      &::-webkit-scrollbar {
+        width: 0.2rem;
+        &-thumb {
+          background-color: #ffffff39;
+          width: 0.1rem;
+          border-radius: 0px;
+        }
+      }
+    }
+    .contact {
+      min-height: 20px;
+      padding: 10px;
+      width: 100%;
+      border-radius: 0rem;
+      display: flex;
+      align-items:center;
+      .avatar {
+        img {
+          width: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+          height: 40px;
+        }
+      }
+      .username {
+        h3 {
+          display: none;      
+        }
+      }
+    }
+    .selected {
+      background-color: #9a86f3;
+    }
+  }
+}
