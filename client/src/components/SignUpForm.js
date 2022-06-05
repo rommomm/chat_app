@@ -11,7 +11,9 @@ function SignUpForm({ handleSignUpForm }) {
   const [image, setImage] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(randomImage);
+  const [hiddenAvatar, setHiddenAvatar] = useState(false);
+  const [hiddenAvatarButton, setHiddenAvatarButton] = useState(false);
   console.log("image", imageUrl);
   console.log("randomImage", randomImage);
   const formik = useFormik({
@@ -26,6 +28,8 @@ function SignUpForm({ handleSignUpForm }) {
         return toast.error("Enter your email", errorStyle);
       } else if (values.username.length < 3) {
         return toast.error("Short username", errorStyle);
+      } else if (values.username.length > 10) {
+        return toast.error("Long username", errorStyle);
       } else if (values.password.length < 6) {
         return toast.error("Short password", errorStyle);
       } else if (!values.avatar) {
@@ -43,6 +47,7 @@ function SignUpForm({ handleSignUpForm }) {
     } else {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
+      setHiddenAvatar(true);
     }
   };
 
@@ -62,6 +67,8 @@ function SignUpForm({ handleSignUpForm }) {
         }
       );
       setUploadingImage(false);
+      setHiddenAvatar(false);
+      setHiddenAvatarButton(true);
       return res.data.url;
     } catch (error) {
       setUploadingImage(false);
@@ -118,13 +125,20 @@ function SignUpForm({ handleSignUpForm }) {
         onChange={formik.handleChange}
         value={formik.values.password}
       />
-      {imageUrl ? (
-        <button type="submit">Sign up</button>
-      ) : (
-        <button onClick={(e) => handleUploadAvatar(e)}>
+      {imageUrl && (
+        <button type="submit" hidden={hiddenAvatar}>
+          Sign up
+        </button>
+      )}
+      {image && (
+        <button
+          onClick={(e) => handleUploadAvatar(e)}
+          hidden={hiddenAvatarButton}
+        >
           {uploadingImage ? "Uploading..." : "Upload avatar"}
         </button>
       )}
+
       <span>
         <div>Alredy have an account ?</div>
         <div>
